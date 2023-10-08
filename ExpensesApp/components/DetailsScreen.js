@@ -1,10 +1,11 @@
 import { View, Text, TextInput } from "react-native";
-import React from "react";
+import DropDownPicker from "react-native-dropdown-picker";
+import React, { useState } from "react";
 
 import PButton from "./PButton";
-import { colors, styles } from "../styles";
+import { styles } from "../styles";
 
-const AddExpScreen = ({
+const DetailsScreen = ({
   item,
   unitPrice,
   quantity,
@@ -12,13 +13,34 @@ const AddExpScreen = ({
   changeUnitPrice,
   changeQuantity,
 }) => {
+  // This is the upper limit for the quantity dropdown picker
+  const quantityUpperLimit = 10;
+
+  // This is the array of objects that will be used to populate the quantity dropdown picker
+  // The range of quantity has a lower limit of 1, and an upper limit of quantityUpperLimit
+  const quantityArray = [];
+  for (let i = 1; i <= quantityUpperLimit; i++) {
+    quantityArray.push({ label: i.toString(), value: i });
+  }
+
+  const [pickerOpen, setPickerOpen] = useState(false);
+
   function handleCancel() {
     console.log("Cancel pressed");
+    changeItem("");
+    changeUnitPrice(null);
+    changeQuantity(null);
   }
 
   function handleSave() {
     console.log("Save pressed");
+    if (!item || !unitPrice || !quantity) {
+      alert("Invalid input", "Please check your input values");
+      return;
+    }
     console.log("Item: ", item);
+    console.log("Unit Price: ", unitPrice);
+    console.log("Quantity", quantity);
   }
 
   function handleItemChange(value) {
@@ -29,8 +51,8 @@ const AddExpScreen = ({
     changeUnitPrice(value);
   }
 
-  function handleQuantityChange(value) {
-    changeQuantity(value);
+  function handleQuantityChange(item) {
+    changeQuantity(item.value);
   }
 
   return (
@@ -50,6 +72,14 @@ const AddExpScreen = ({
           onChangeText={handleUnitPriceChange}
         />
         <Text style={styles.inputLabel}>Quantity *</Text>
+        <DropDownPicker
+          containerStyle={styles.dropDown}
+          open={pickerOpen}
+          items={quantityArray}
+          setOpen={setPickerOpen}
+          onSelectItem={handleQuantityChange}
+          placeholder={quantity ? quantity.toString() : ""}
+        />
       </View>
       <View style={styles.btnsWrapper}>
         <PButton pressHandler={handleCancel}>
@@ -63,4 +93,4 @@ const AddExpScreen = ({
   );
 };
 
-export default AddExpScreen;
+export default DetailsScreen;

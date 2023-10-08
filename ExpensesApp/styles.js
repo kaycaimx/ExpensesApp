@@ -28,7 +28,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.text,
     borderRadius: 5,
     height: 25,
+    paddingHorizontal: 5,
     marginBottom: 10,
+  },
+  dropDown: {
+    height: 300,
   },
   btnsWrapper: {
     flexDirection: "row",

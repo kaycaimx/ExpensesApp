@@ -1,8 +1,8 @@
-import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, Text } from "react-native";
 import React, { useState } from "react";
 import { styles } from "./styles";
 
-import AddExpScreen from "./components/AddExpScreen";
+import DetailsScreen from "./components/DetailsScreen";
 
 export default function App() {
   const [item, setItem] = useState("");
@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <AddExpScreen
+      <DetailsScreen
         item={item}
         unitPrice={unitPrice}
         quantity={quantity}
@@ -31,6 +31,7 @@ export default function App() {
         changeUnitPrice={changeUnitPrice}
         changeQuantity={changeQuantity}
       />
+      <></>
     </KeyboardAvoidingView>
   );
 }
