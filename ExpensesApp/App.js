@@ -12,26 +12,10 @@ import PIcon from "./components/PIcon";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [item, setItem] = useState(null);
-  const [unitPrice, setUnitPrice] = useState(null);
-  const [quantity, setQuantity] = useState(5);
-
   const [addIconPressed, setAddIconPressed] = useState(false);
 
-  function changeItem(value) {
-    setItem(value);
-  }
-
-  function changeUnitPrice(value) {
-    setUnitPrice(value);
-  }
-
-  function changeQuantity(value) {
-    setQuantity(value);
-  }
-
   function addExpense() {
-    console.log("Add expense pressed");
+    //console.log("Add expense pressed");
     setAddIconPressed(true);
   }
 
@@ -41,31 +25,25 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{
+          options={({ navigation }) => ({
             title: "All Expenses",
             headerRight: () => (
-              <PIcon pressHandler={addExpense}>
+              <PIcon
+                pressHandler={() => {
+                  navigation.navigate("Details");
+                }}
+              >
                 <Ionicons
                   name="add"
                   size={24}
+                  on
                   color={addIconPressed ? "gold" : "white"}
                 />
               </PIcon>
             ),
-          }}
+          })}
         />
-        <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          initialParams={{
-            item: item,
-            unitPrice: unitPrice,
-            quantity: quantity,
-            changeItem: changeItem,
-            changeUnitPrice: changeUnitPrice,
-            changeQuantity: changeQuantity,
-          }}
-        />
+        <Stack.Screen name="Details" component={DetailsScreen} />
         {/* <DetailsScreen
         item={item}
         unitPrice={unitPrice}
