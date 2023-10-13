@@ -25,6 +25,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          initialParams={{ itemId: 42 }}
           options={({ navigation }) => ({
             title: "All Expenses",
             headerRight: () => (
