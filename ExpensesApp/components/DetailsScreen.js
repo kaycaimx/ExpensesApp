@@ -1,18 +1,32 @@
-import { View, Text, TextInput } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  View,
+  Text,
+  TextInput,
+} from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import React, { useState } from "react";
 
 import PButton from "./PButton";
 import { styles } from "../styles";
 
-const DetailsScreen = ({
-  item,
-  unitPrice,
-  quantity,
-  changeItem,
-  changeUnitPrice,
-  changeQuantity,
-}) => {
+const DetailsScreen = () => {
+  const [item, setItem] = useState("");
+  const [unitPrice, setUnitPrice] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+
+  function changeItem(value) {
+    setItem(value);
+  }
+
+  function changeUnitPrice(value) {
+    setUnitPrice(value);
+  }
+
+  function changeQuantity(pikcerItem) {
+    setQuantity(pikcerItem?.value);
+  }
   // This is the upper limit for the quantity dropdown picker
   const quantityUpperLimit = 10;
 
@@ -34,42 +48,30 @@ const DetailsScreen = ({
 
   function handleSave() {
     console.log("Save pressed");
-    if (!item || !unitPrice || !quantity) {
-      alert("Invalid input", "Please check your input values");
-      return;
-    }
     console.log("Item: ", item);
     console.log("Unit Price: ", unitPrice);
     console.log("Quantity", quantity);
-  }
-
-  function handleItemChange(value) {
-    changeItem(value);
-  }
-
-  function handleUnitPriceChange(value) {
-    changeUnitPrice(value);
-  }
-
-  function handleQuantityChange(item) {
-    changeQuantity(item.value);
+    if (!item || !isNaN(item) || !unitPrice || !quantity) {
+      Alert.alert("Invalid input", "Please check your input values");
+      return;
+    }
   }
 
   return (
-    <>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.inputWrapper}>
         <Text style={styles.inputLabel}>Item *</Text>
         <TextInput
           style={styles.inputBox}
           value={item}
-          onChangeText={handleItemChange}
+          onChangeText={changeItem}
         />
         <Text style={styles.inputLabel}>Unit Price *</Text>
         <TextInput
           style={styles.inputBox}
           keyboardType="number-pad"
           value={unitPrice}
-          onChangeText={handleUnitPriceChange}
+          onChangeText={changeUnitPrice}
         />
         <Text style={styles.inputLabel}>Quantity *</Text>
         <DropDownPicker
@@ -77,7 +79,7 @@ const DetailsScreen = ({
           open={pickerOpen}
           items={quantityArray}
           setOpen={setPickerOpen}
-          onSelectItem={handleQuantityChange}
+          onSelectItem={changeQuantity}
           placeholder={quantity ? quantity.toString() : ""}
         />
       </View>
@@ -89,7 +91,7 @@ const DetailsScreen = ({
           <Text style={styles.buttonText}>Save</Text>
         </PButton>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

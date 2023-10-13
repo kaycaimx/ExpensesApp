@@ -1,9 +1,11 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 const colors = {
   background: "thistle",
   headerFooter: "midnightblue",
+  ripple: "mediumslateblue",
   text: "white",
+  iconPressed: "gold",
 };
 
 const styles = StyleSheet.create({
@@ -12,6 +14,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     alignItems: "center",
     justifyContent: "center",
+  },
+  hearder: {
+    headerStyle: { backgroundColor: colors.headerFooter },
+    headerTintColor: colors.text,
+  },
+  iconDefault: {
+    tintColor: colors.text,
+  },
+  iconPressed: {
+    color: colors.iconPressed,
   },
   inputWrapper: {
     width: "90%",
@@ -40,11 +52,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "70%",
   },
-  button: {
+  buttonDefault: {
     width: "45%",
     backgroundColor: colors.headerFooter,
     padding: 5,
     borderRadius: 5,
+  },
+  buttonPressed: {
+    opacity: 0.5,
+    ...(Platform.OS === "android" && {
+      android_ripple: { color: colors.ripple, borderless: false },
+    }),
   },
   buttonText: {
     color: colors.text,

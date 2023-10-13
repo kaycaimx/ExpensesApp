@@ -5,7 +5,12 @@ import { styles } from "../styles";
 
 const PButton = ({ children, pressHandler }) => {
   return (
-    <Pressable style={styles.button} onPress={pressHandler}>
+    <Pressable
+      style={({ pressed }) => {
+        return [styles.buttonDefault, pressed && styles.buttonPressed];
+      }}
+      onPress={pressHandler}
+    >
       {children}
     </Pressable>
   );
