@@ -15,9 +15,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  hearder: {
-    headerStyle: { backgroundColor: colors.headerFooter },
-    headerTintColor: colors.text,
+  addIcon: {
+    marginRight: 10,
   },
   iconDefault: {
     tintColor: colors.text,

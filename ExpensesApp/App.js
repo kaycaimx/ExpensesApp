@@ -2,7 +2,6 @@ import { Button, KeyboardAvoidingView, Text } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
 
 import { colors, styles } from "./styles";
 import DetailsScreen from "./components/DetailsScreen";
@@ -18,37 +17,13 @@ export default function App() {
     { id: 2, item: "pencil", unitPrice: 10, quantity: 10 },
   ];
 
-  const [addIconPressed, setAddIconPressed] = useState(false);
-
-  function addExpense() {
-    //console.log("Add expense pressed");
-    setAddIconPressed(true);
-  }
-
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={styles.hearder}>
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           //component={HomeScreen}
-          initialParams={{ itemId: 42 }}
-          options={({ navigation }) => ({
-            title: "All Expenses",
-            headerRight: () => (
-              <PIcon
-                pressHandler={() => {
-                  navigation.navigate("AddExpense");
-                }}
-              >
-                <Ionicons
-                  name="add"
-                  size={24}
-                  on
-                  color={addIconPressed ? "gold" : "white"}
-                />
-              </PIcon>
-            ),
-          })}
+          options={{ headerShown: false }}
         >
           {(props) => <HomeScreen {...props} data={sampleExpense} />}
         </Stack.Screen>
