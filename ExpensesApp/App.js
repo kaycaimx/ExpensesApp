@@ -12,6 +12,12 @@ import PIcon from "./components/PIcon";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const sampleExpense = [
+    { id: 0, item: "book", unitPrice: 100, quantity: 2 },
+    { id: 1, item: "pen", unitPrice: 200, quantity: 5 },
+    { id: 2, item: "pencil", unitPrice: 10, quantity: 10 },
+  ];
+
   const [addIconPressed, setAddIconPressed] = useState(false);
 
   function addExpense() {
@@ -24,14 +30,14 @@ export default function App() {
       <Stack.Navigator screenOptions={styles.hearder}>
         <Stack.Screen
           name="Home"
-          component={HomeScreen}
+          //component={HomeScreen}
           initialParams={{ itemId: 42 }}
           options={({ navigation }) => ({
             title: "All Expenses",
             headerRight: () => (
               <PIcon
                 pressHandler={() => {
-                  navigation.navigate("Details");
+                  navigation.navigate("AddExpense");
                 }}
               >
                 <Ionicons
@@ -43,16 +49,14 @@ export default function App() {
               </PIcon>
             ),
           })}
+        >
+          {(props) => <HomeScreen {...props} data={sampleExpense} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="AddExpense"
+          component={DetailsScreen}
+          options={{ title: "Add An Expense" }}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        {/* <DetailsScreen
-        item={item}
-        unitPrice={unitPrice}
-        quantity={quantity}
-        changeItem={changeItem}
-        changeUnitPrice={changeUnitPrice}
-        changeQuantity={changeQuantity}
-      /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

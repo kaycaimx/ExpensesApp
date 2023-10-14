@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dropDown: {
-    height: 300,
+    height: 250,
   },
   btnsWrapper: {
     flexDirection: "row",
@@ -67,6 +67,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: colors.text,
     textAlign: "center",
+  },
+  checkboxWrapper: {
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 25,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: colors.headerFooter,
   },
 });
 

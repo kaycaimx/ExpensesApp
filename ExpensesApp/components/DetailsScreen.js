@@ -6,6 +6,7 @@ import {
   TextInput,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import Checkbox from "expo-checkbox";
 import React, { useState } from "react";
 
 import PButton from "./PButton";
@@ -15,6 +16,12 @@ const DetailsScreen = () => {
   const [item, setItem] = useState("");
   const [unitPrice, setUnitPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
+
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+  //const total = unitPrice && quantity ? unitPrice * quantity : 0;
+  const [isOverbudget, setIsOverbudget] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
 
   function changeItem(value) {
     setItem(value);
@@ -26,6 +33,11 @@ const DetailsScreen = () => {
 
   function changeQuantity(pikcerItem) {
     setQuantity(pikcerItem?.value);
+  }
+
+  function checkCheckbox() {
+    setIsCheckboxChecked(true);
+    console.log("Checkbox checked");
   }
   // This is the upper limit for the quantity dropdown picker
   const quantityUpperLimit = 10;
@@ -83,6 +95,15 @@ const DetailsScreen = () => {
           placeholder={quantity ? quantity.toString() : ""}
         />
       </View>
+      {isOverbudget && !isApproved && (
+        <View style={styles.checkboxWrapper}>
+          <Text style={styles.checkboxLabel}>
+            This item is marked as overbudget. Select the checkbox if you would
+            like to approve it.
+          </Text>
+          <Checkbox value={isCheckboxChecked} onValueChange={checkCheckbox} />
+        </View>
+      )}
       <View style={styles.btnsWrapper}>
         <PButton pressHandler={handleCancel}>
           <Text style={styles.buttonText}>Cancel</Text>
