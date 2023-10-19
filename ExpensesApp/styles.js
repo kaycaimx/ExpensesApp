@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dropDown: {
-    height: 300,
+    height: 250,
   },
   btnsWrapper: {
     flexDirection: "row",
@@ -102,9 +102,10 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     opacity: 0.5,
-    ...(Platform.OS === "android" && {
-      android_ripple: { color: colors.ripple, borderless: false },
-    }),
+  },
+  androidRipple: {
+    color: colors.ripple,
+    borderless: false,
   },
   buttonText: {
     color: colors.text,
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
     marginBottom: 25,
   },
   checkboxLabel: {
