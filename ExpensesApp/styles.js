@@ -1,11 +1,14 @@
 import { Platform, StyleSheet } from "react-native";
 
 const colors = {
+  alertTriangle: "goldenrod",
   background: "thistle",
   headerFooter: "midnightblue",
   priceQuantityWrapper: "white",
   priceQuantityText: "black",
   ripple: "mediumslateblue",
+  tabBarFocused: "goldenrod",
+  tabBarUnfocused: "grey",
   text: "white",
   iconPressed: "gold",
 };

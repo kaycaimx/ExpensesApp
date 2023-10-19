@@ -5,7 +5,6 @@ import Entry from "./Entry";
 import { styles } from "../styles";
 
 const EntriesList = ({ navigation, data }) => {
-  console.log("EntriesList", data);
   return (
     <KeyboardAvoidingView style={[styles.container, { paddingTop: 20 }]}>
       <ScrollView style={styles.scrollView}>

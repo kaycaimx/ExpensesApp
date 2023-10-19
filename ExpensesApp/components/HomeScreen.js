@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation, data }) => {
   }
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerStyle: { backgroundColor: colors.headerFooter },
         headerTintColor: colors.text,
         headerRight: () => (
@@ -33,12 +33,27 @@ const HomeScreen = ({ navigation, data }) => {
             <Ionicons name="add" size={24} color={"white"} />
           </PIcon>
         ),
-      }}
+        tabBarStyle: { backgroundColor: colors.headerFooter },
+        tabBarIcon: ({ focused }) => {
+          let iconName;
+          let color;
+          if (route.name === "AllExpenses") {
+            iconName = "home";
+            color = focused ? colors.tabBarFocused : colors.tabBarUnfocused;
+          } else if (route.name === "OverbudgetExpenses") {
+            iconName = "alert";
+            color = focused ? colors.tabBarFocused : colors.tabBarUnfocused;
+          }
+          return <Ionicons name={iconName} size={24} color={color} />;
+        },
+        tabBarActiveTintColor: colors.tabBarFocused,
+        tabBarInactiveTintColor: colors.tabBarUnfocused,
+      })}
     >
       <Tab.Screen
         name="AllExpenses"
         options={{
-          title: "All Expenses",
+          tabBarLabel: "Home",
         }}
       >
         {(props) => <EntriesList {...props} data={allExpenses} />}
@@ -46,7 +61,7 @@ const HomeScreen = ({ navigation, data }) => {
       <Tab.Screen
         name="OverbudgetExpenses"
         options={{
-          title: "Overbudget Expenses",
+          tabBarLabel: "Overbudget",
         }}
       >
         {(props) => <EntriesList {...props} data={overbudgetExpenses} />}

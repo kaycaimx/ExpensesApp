@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import React from "react";
 
 import { Foundation } from "@expo/vector-icons";
-import { styles } from "../styles";
+import { colors, styles } from "../styles";
 
 const Entry = ({
   navigation,
@@ -25,7 +25,9 @@ const Entry = ({
     >
       <Text style={styles.entryItem}>{item}</Text>
       <View style={styles.priceApprovedWrapper}>
-        {isOverbudget && <Foundation name="alert" size={24} color="orange" />}
+        {isOverbudget && (
+          <Foundation name="alert" size={24} color={colors.alertTriangle} />
+        )}
         <View style={styles.priceQuantity}>
           <Text>
             {quantity} * {unitPrice}
