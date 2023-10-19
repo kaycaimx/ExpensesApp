@@ -5,12 +5,13 @@ import React, { useState } from "react";
 
 import { colors, styles } from "../styles";
 import PIcon from "./PIcon";
-import SummaryScreen from "./SummaryScreen";
+import EntriesList from "./EntriesList";
 
 const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation, data }) => {
-  //console.log(data);
+  const allExpenses = data;
+  const overbudgetExpenses = data.filter((expense) => expense.isOverBudget);
 
   const [addIconPressed, setAddIconPressed] = useState(false);
 
@@ -36,18 +37,20 @@ const HomeScreen = ({ navigation, data }) => {
     >
       <Tab.Screen
         name="AllExpenses"
-        component={SummaryScreen}
         options={{
           title: "All Expenses",
         }}
-      />
+      >
+        {(props) => <EntriesList {...props} data={allExpenses} />}
+      </Tab.Screen>
       <Tab.Screen
         name="OverbudgetExpenses"
-        component={SummaryScreen}
         options={{
           title: "Overbudget Expenses",
         }}
-      />
+      >
+        {(props) => <EntriesList {...props} data={overbudgetExpenses} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };

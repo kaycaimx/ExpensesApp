@@ -58,6 +58,8 @@ const DetailsScreen = () => {
     changeQuantity(null);
   }
 
+  //Add validation function for item, unitPrice, and quantity!!!
+
   function handleSave() {
     console.log("Save pressed");
     console.log("Item: ", item);

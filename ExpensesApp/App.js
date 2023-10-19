@@ -12,9 +12,38 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const sampleExpense = [
-    { id: 0, item: "book", unitPrice: 100, quantity: 2 },
-    { id: 1, item: "pen", unitPrice: 200, quantity: 5 },
-    { id: 2, item: "pencil", unitPrice: 10, quantity: 10 },
+    {
+      id: 0,
+      item: "book",
+      unitPrice: 100,
+      quantity: 2,
+      isOverBudget: false,
+      isApproved: false,
+    },
+    {
+      id: 1,
+      item: "pen",
+      unitPrice: 200,
+      quantity: 5,
+      isOverBudget: true,
+      isApproved: false,
+    },
+    {
+      id: 2,
+      item: "pencil",
+      unitPrice: 10,
+      quantity: 10,
+      isOverBudget: false,
+      isApproved: false,
+    },
+    {
+      id: 3,
+      item: "pikachu",
+      unitPrice: 1000,
+      quantity: 1,
+      isOverBudget: true,
+      isApproved: false,
+    },
   ];
 
   return (
