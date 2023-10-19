@@ -17,7 +17,7 @@ export default function App() {
       item: "book",
       unitPrice: 100,
       quantity: 2,
-      isOverBudget: false,
+      isOverbudget: false,
       isApproved: false,
     },
     {
@@ -25,7 +25,7 @@ export default function App() {
       item: "pen",
       unitPrice: 200,
       quantity: 5,
-      isOverBudget: true,
+      isOverbudget: true,
       isApproved: false,
     },
     {
@@ -33,7 +33,7 @@ export default function App() {
       item: "pencil",
       unitPrice: 10,
       quantity: 10,
-      isOverBudget: false,
+      isOverbudget: false,
       isApproved: false,
     },
     {
@@ -41,25 +41,31 @@ export default function App() {
       item: "pikachu",
       unitPrice: 1000,
       quantity: 1,
-      isOverBudget: true,
+      isOverbudget: true,
       isApproved: false,
     },
   ];
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          //component={HomeScreen}
-          options={{ headerShown: false }}
-        >
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: colors.headerFooter },
+          headerTintColor: colors.text,
+        }}
+      >
+        <Stack.Screen name="Home" options={{ headerShown: false }}>
           {(props) => <HomeScreen {...props} data={sampleExpense} />}
         </Stack.Screen>
         <Stack.Screen
           name="AddExpense"
           component={DetailsScreen}
           options={{ title: "Add An Expense" }}
+        />
+        <Stack.Screen
+          name="EditExpense"
+          component={DetailsScreen}
+          options={{ title: "Edit An Expense" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

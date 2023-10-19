@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation, data }) => {
   const allExpenses = data;
-  const overbudgetExpenses = data.filter((expense) => expense.isOverBudget);
+  const overbudgetExpenses = data.filter((expense) => expense.isOverbudget);
 
   const [addIconPressed, setAddIconPressed] = useState(false);
 

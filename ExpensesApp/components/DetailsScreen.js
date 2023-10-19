@@ -20,7 +20,7 @@ const DetailsScreen = () => {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
   //const total = unitPrice && quantity ? unitPrice * quantity : 0;
-  const [isOverbudget, setIsOverbudget] = useState(false);
+  const [isOverbudget, setIsOverbudget] = useState(true);
   const [isApproved, setIsApproved] = useState(false);
 
   function changeItem(value) {

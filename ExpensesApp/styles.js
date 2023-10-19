@@ -3,6 +3,8 @@ import { Platform, StyleSheet } from "react-native";
 const colors = {
   background: "thistle",
   headerFooter: "midnightblue",
+  priceQuantityWrapper: "white",
+  priceQuantityText: "black",
   ripple: "mediumslateblue",
   text: "white",
   iconPressed: "gold",
@@ -18,6 +20,45 @@ const styles = StyleSheet.create({
   addIcon: {
     marginRight: 10,
   },
+  scrollView: {
+    width: "90%",
+  },
+  entryWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: colors.headerFooter,
+    width: "100%",
+    height: 40,
+    alignItems: "center",
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 15,
+  },
+  entryPressed: {
+    opacity: 0.5,
+  },
+  entryItem: {
+    color: colors.text,
+    fontSize: 16,
+  },
+  priceApprovedWrapper: {
+    flexDirection: "row",
+    height: "90%",
+    width: "30%",
+    alignItems: "center",
+  },
+  priceQuantity: {
+    position: "absolute",
+    right: 0,
+    backgroundColor: colors.priceQuantityWrapper,
+    color: colors.priceQuantityText,
+    marginLeft: 10,
+    height: "100%",
+    width: "70%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 2,
+  },
   iconDefault: {
     tintColor: colors.text,
   },
@@ -26,7 +67,6 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: "90%",
-    marginBottom: 20,
   },
   inputLabel: {
     color: colors.headerFooter,
@@ -43,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   dropDown: {
-    height: 250,
+    height: 300,
   },
   btnsWrapper: {
     flexDirection: "row",
