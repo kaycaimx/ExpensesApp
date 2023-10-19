@@ -13,7 +13,7 @@ import PButton from "./PButton";
 import { styles } from "../styles";
 
 const DetailsScreen = ({ route }) => {
-  console.log("route.params", route.params);
+  //console.log("route.params", route.params);
 
   const { item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
     route.params;
@@ -45,7 +45,7 @@ const DetailsScreen = ({ route }) => {
   }
 
   function checkCheckbox() {
-    setIsCheckboxChecked(true);
+    setIsCheckboxChecked(!isCheckboxChecked);
     console.log("Checkbox checked");
   }
   // This is the upper limit for the quantity dropdown picker
@@ -68,16 +68,54 @@ const DetailsScreen = ({ route }) => {
   }
 
   //Add validation function for item, unitPrice, and quantity!!!
+  function validateInput() {
+    if (
+      !inputItem ||
+      !isNaN(inputItem) ||
+      !inputUnitPrice ||
+      inputUnitPrice < 0 ||
+      !inputQuantity
+    ) {
+      Alert.alert("Invalid input", "Please check your input values");
+      return false;
+    }
+    return true;
+  }
+
+  function saveEdits() {
+    console.log("Save changes");
+  }
 
   function handleSave() {
     console.log("Save pressed");
+    if (!validateInput()) {
+      return;
+    }
+    console.log("isCheckboxChecked", isCheckboxChecked);
+    if (isEditing) {
+      Alert.alert("Important", "Are you sure you want to save these changes?", [
+        {
+          text: "No",
+          onPress: () => {
+            console.log("Not saving changes");
+            return;
+          },
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            saveEdits();
+          },
+          style: "ok",
+        },
+      ]);
+    } else {
+      console.log("Sending new data to database.");
+    }
     console.log("Item: ", inputItem);
     console.log("Unit Price: ", inputUnitPrice);
     console.log("Quantity", inputQuantity);
-    if (!inputItem || !isNaN(inputItem) || !inputUnitPrice || !inputQuantity) {
-      Alert.alert("Invalid input", "Please check your input values");
-      return;
-    }
   }
 
   return (

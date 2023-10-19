@@ -2,6 +2,7 @@ import { Button, KeyboardAvoidingView, Text } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AntDesign } from "@expo/vector-icons";
 
 import { colors, styles } from "./styles";
 import DetailsScreen from "./components/DetailsScreen";
@@ -46,6 +47,10 @@ export default function App() {
     },
   ];
 
+  function deleteHandler() {
+    console.log("Delete button pressed");
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -65,7 +70,14 @@ export default function App() {
         <Stack.Screen
           name="EditExpense"
           component={DetailsScreen}
-          options={{ title: "Edit An Expense" }}
+          options={{
+            title: "Edit An Expense",
+            headerRight: () => (
+              <PIcon iconStyle={styles.addIcon} pressHandler={deleteHandler}>
+                <AntDesign name="delete" size={20} color={colors.text} />
+              </PIcon>
+            ),
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

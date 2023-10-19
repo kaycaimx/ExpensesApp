@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation, data }) => {
         headerTintColor: colors.text,
         headerRight: () => (
           <PIcon iconStyle={styles.addIcon} pressHandler={navigateToAddExpense}>
-            <Ionicons name="add" size={24} color={"white"} />
+            <Ionicons name="add" size={24} color={colors.text} />
           </PIcon>
         ),
         tabBarStyle: { backgroundColor: colors.headerFooter },
