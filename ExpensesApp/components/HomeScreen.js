@@ -21,7 +21,14 @@ const HomeScreen = ({ navigation, data }) => {
   }
 
   function navigateToAddExpense() {
-    navigation.navigate("AddExpense");
+    navigation.navigate("AddExpense", {
+      item: "",
+      unitPrice: null,
+      quantity: null,
+      isOverbudget: false,
+      isApproved: false,
+      isEditing: false,
+    });
   }
   return (
     <Tab.Navigator

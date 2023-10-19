@@ -12,27 +12,36 @@ import React, { useState } from "react";
 import PButton from "./PButton";
 import { styles } from "../styles";
 
-const DetailsScreen = () => {
-  const [item, setItem] = useState("");
-  const [unitPrice, setUnitPrice] = useState(null);
-  const [quantity, setQuantity] = useState(null);
+const DetailsScreen = ({ route }) => {
+  console.log("route.params", route.params);
+
+  const { item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
+    route.params;
+
+  const [inputItem, setInputItem] = useState(item);
+  const [inputUnitPrice, setInputUnitPrice] = useState(
+    unitPrice ? unitPrice.toString() : null
+  );
+  const [inputQuantity, setInputQuantity] = useState(
+    quantity ? quantity.toString() : null
+  );
 
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
   //const total = unitPrice && quantity ? unitPrice * quantity : 0;
-  const [isOverbudget, setIsOverbudget] = useState(true);
-  const [isApproved, setIsApproved] = useState(false);
+  const [overbudget, setOverbudget] = useState(isOverbudget);
+  const [approved, setApproved] = useState(isApproved);
 
   function changeItem(value) {
-    setItem(value);
+    setInputItem(value);
   }
 
   function changeUnitPrice(value) {
-    setUnitPrice(value);
+    setInputUnitPrice(value);
   }
 
   function changeQuantity(pikcerItem) {
-    setQuantity(pikcerItem?.value);
+    setInputQuantity(pikcerItem?.value);
   }
 
   function checkCheckbox() {
@@ -62,10 +71,10 @@ const DetailsScreen = () => {
 
   function handleSave() {
     console.log("Save pressed");
-    console.log("Item: ", item);
-    console.log("Unit Price: ", unitPrice);
-    console.log("Quantity", quantity);
-    if (!item || !isNaN(item) || !unitPrice || !quantity) {
+    console.log("Item: ", inputItem);
+    console.log("Unit Price: ", inputUnitPrice);
+    console.log("Quantity", inputQuantity);
+    if (!inputItem || !isNaN(inputItem) || !inputUnitPrice || !inputQuantity) {
       Alert.alert("Invalid input", "Please check your input values");
       return;
     }
@@ -77,14 +86,14 @@ const DetailsScreen = () => {
         <Text style={styles.inputLabel}>Item *</Text>
         <TextInput
           style={styles.inputBox}
-          value={item}
+          value={inputItem}
           onChangeText={changeItem}
         />
         <Text style={styles.inputLabel}>Unit Price *</Text>
         <TextInput
           style={styles.inputBox}
           keyboardType="number-pad"
-          value={unitPrice}
+          value={inputUnitPrice}
           onChangeText={changeUnitPrice}
         />
         <Text style={styles.inputLabel}>Quantity *</Text>
@@ -94,10 +103,10 @@ const DetailsScreen = () => {
           items={quantityArray}
           setOpen={setPickerOpen}
           onSelectItem={changeQuantity}
-          placeholder={quantity ? quantity.toString() : ""}
+          placeholder={inputQuantity ? inputQuantity.toString() : ""}
         />
       </View>
-      {isOverbudget && !isApproved && (
+      {overbudget && !approved && (
         <View style={styles.checkboxWrapper}>
           <Text style={styles.checkboxLabel}>
             This item is marked as overbudget. Select the checkbox if you would

@@ -6,7 +6,6 @@ import { colors, styles } from "../styles";
 
 const Entry = ({
   navigation,
-  id,
   item,
   unitPrice,
   quantity,
@@ -14,13 +13,21 @@ const Entry = ({
   isApproved,
 }) => {
   function pressHandler() {
-    navigation.navigate("EditExpense", { id: id });
+    navigation.navigate("EditExpense", {
+      item: item,
+      unitPrice: unitPrice,
+      quantity: quantity,
+      isOverbudget: isOverbudget,
+      isApproved: isApproved,
+      isEditing: true,
+    });
   }
   return (
     <Pressable
       style={({ pressed }) => {
         return [styles.entryWrapper, pressed && styles.entryPressed];
       }}
+      android_ripple={styles.androidRipple}
       onPress={pressHandler}
     >
       <Text style={styles.entryItem}>{item}</Text>
