@@ -8,10 +8,12 @@ import { colors, styles } from "./styles";
 import DetailsScreen from "./components/DetailsScreen";
 import HomeScreen from "./components/HomeScreen";
 import PIcon from "./components/PIcon";
+import { database } from "./firebase/firebaseSetup";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  console.log(database);
   const sampleExpense = [
     {
       id: 0,
@@ -26,22 +28,6 @@ export default function App() {
       item: "pen",
       unitPrice: 200,
       quantity: 5,
-      isOverbudget: true,
-      isApproved: false,
-    },
-    {
-      id: 2,
-      item: "pencil",
-      unitPrice: 10,
-      quantity: 10,
-      isOverbudget: false,
-      isApproved: false,
-    },
-    {
-      id: 3,
-      item: "pikachu",
-      unitPrice: 1000,
-      quantity: 1,
       isOverbudget: true,
       isApproved: false,
     },
@@ -73,7 +59,7 @@ export default function App() {
           options={{
             title: "Edit An Expense",
             headerRight: () => (
-              <PIcon iconStyle={styles.addIcon} pressHandler={deleteHandler}>
+              <PIcon pressHandler={deleteHandler}>
                 <AntDesign name="delete" size={20} color={colors.text} />
               </PIcon>
             ),
