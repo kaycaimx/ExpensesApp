@@ -1,9 +1,16 @@
 import { Pressable } from "react-native";
 import React from "react";
 
-const PIcon = ({ children, pressHandler, iconStyle }) => {
+import { styles } from "../styles";
+
+const PIcon = ({ children, pressHandler }) => {
   return (
-    <Pressable style={iconStyle} onPress={pressHandler}>
+    <Pressable
+      onPress={pressHandler}
+      style={({ pressed }) => {
+        return [styles.iconDefault, pressed && styles.iconPressed];
+      }}
+    >
       {children}
     </Pressable>
   );

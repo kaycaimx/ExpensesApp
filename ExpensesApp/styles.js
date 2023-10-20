@@ -10,7 +10,7 @@ const colors = {
   tabBarFocused: "goldenrod",
   tabBarUnfocused: "grey",
   text: "white",
-  iconPressed: "gold",
+  iconPressed: "mediumslateblue",
 };
 
 const styles = StyleSheet.create({
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   iconDefault: {
-    tintColor: colors.text,
+    color: colors.text,
   },
   iconPressed: {
     color: colors.iconPressed,
@@ -122,6 +122,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     color: colors.headerFooter,
+  },
+  iconDefault: {
+    backgroundColor: colors.headerFooter,
+  },
+  iconPressed: {
+    backgroundColor: colors.iconPressed,
+    opacity: 0.5,
   },
 });
 
