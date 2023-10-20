@@ -62,12 +62,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 2,
   },
-  iconDefault: {
-    color: colors.text,
-  },
-  iconPressed: {
-    color: colors.iconPressed,
-  },
   inputWrapper: {
     width: "90%",
   },
@@ -125,6 +119,7 @@ const styles = StyleSheet.create({
   },
   iconDefault: {
     backgroundColor: colors.headerFooter,
+    marginRight: 5,
   },
   iconPressed: {
     backgroundColor: colors.iconPressed,

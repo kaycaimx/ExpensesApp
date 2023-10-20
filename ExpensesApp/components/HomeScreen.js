@@ -55,6 +55,7 @@ const HomeScreen = ({ navigation, data }) => {
       <Tab.Screen
         name="AllExpenses"
         options={{
+          title: "All Expenses",
           tabBarLabel: "Home",
         }}
       >
@@ -63,6 +64,7 @@ const HomeScreen = ({ navigation, data }) => {
       <Tab.Screen
         name="OverbudgetExpenses"
         options={{
+          title: "Overbudget Expenses",
           tabBarLabel: "Overbudget",
         }}
       >
