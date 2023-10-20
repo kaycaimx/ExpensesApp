@@ -11,9 +11,11 @@ import React, { useState } from "react";
 
 import PButton from "./PButton";
 import { styles } from "../styles";
+import { addExpenseToDB } from "../firebase/firestoreHelper";
 
-const DetailsScreen = ({ route }) => {
+const DetailsScreen = ({ navigation, route }) => {
   //console.log("route.params", route.params);
+  const budgetLimit = 500;
 
   const { item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
     route.params;
@@ -92,6 +94,7 @@ const DetailsScreen = ({ route }) => {
       return;
     }
     console.log("isCheckboxChecked", isCheckboxChecked);
+
     if (isEditing) {
       Alert.alert("Important", "Are you sure you want to save these changes?", [
         {
@@ -111,11 +114,18 @@ const DetailsScreen = ({ route }) => {
         },
       ]);
     } else {
+      let newExpense = {
+        item: inputItem,
+        unitPrice: Number(inputUnitPrice),
+        quantity: Number(inputQuantity),
+        isOverbudget:
+          Number(inputUnitPrice) * Number(inputQuantity) > budgetLimit,
+        isApproved: false,
+      };
+      addExpenseToDB(newExpense);
       console.log("Sending new data to database.");
+      navigation.navigate("Home");
     }
-    console.log("Item: ", inputItem);
-    console.log("Unit Price: ", inputUnitPrice);
-    console.log("Quantity", inputQuantity);
   }
 
   return (
