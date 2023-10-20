@@ -1,41 +1,31 @@
 import { Button, KeyboardAvoidingView, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AntDesign } from "@expo/vector-icons";
 
 import { colors, styles } from "./styles";
 import DetailsScreen from "./components/DetailsScreen";
 import HomeScreen from "./components/HomeScreen";
-import PIcon from "./components/PIcon";
+
 import { database } from "./firebase/firebaseSetup";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  console.log(database);
-  const sampleExpense = [
-    {
-      id: 0,
-      item: "book",
-      unitPrice: 100,
-      quantity: 2,
-      isOverbudget: false,
-      isApproved: false,
-    },
-    {
-      id: 1,
-      item: "pen",
-      unitPrice: 200,
-      quantity: 5,
-      isOverbudget: true,
-      isApproved: false,
-    },
-  ];
+  const [expenses, setExpenses] = useState([]);
 
-  function deleteHandler() {
-    console.log("Delete button pressed");
-  }
+  useEffect(() => {
+    onSnapshot(collection(database, "expenses"), (snapshot) => {
+      if (!snapshot.empty) {
+        let data = [];
+        snapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        setExpenses(data);
+      }
+    });
+  }, []);
 
   return (
     <NavigationContainer>
@@ -46,7 +36,7 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Home" options={{ headerShown: false }}>
-          {(props) => <HomeScreen {...props} data={sampleExpense} />}
+          {(props) => <HomeScreen {...props} data={expenses} />}
         </Stack.Screen>
         <Stack.Screen
           name="AddExpense"
@@ -58,11 +48,6 @@ export default function App() {
           component={DetailsScreen}
           options={{
             title: "Edit An Expense",
-            headerRight: () => (
-              <PIcon pressHandler={deleteHandler}>
-                <AntDesign name="delete" size={20} color={colors.text} />
-              </PIcon>
-            ),
           }}
         />
       </Stack.Navigator>

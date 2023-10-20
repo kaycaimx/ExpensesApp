@@ -6,6 +6,7 @@ import { colors, styles } from "../styles";
 
 const Entry = ({
   navigation,
+  id,
   item,
   unitPrice,
   quantity,
@@ -14,6 +15,7 @@ const Entry = ({
 }) => {
   function pressHandler() {
     navigation.navigate("EditExpense", {
+      id: id,
       item: item,
       unitPrice: unitPrice,
       quantity: quantity,

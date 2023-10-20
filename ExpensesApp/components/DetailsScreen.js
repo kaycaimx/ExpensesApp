@@ -8,16 +8,31 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import Checkbox from "expo-checkbox";
 import React, { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 
 import PButton from "./PButton";
-import { styles } from "../styles";
+import PIcon from "./PIcon";
+import { colors, styles } from "../styles";
 import { addExpenseToDB } from "../firebase/firestoreHelper";
 
 const DetailsScreen = ({ navigation, route }) => {
-  //console.log("route.params", route.params);
+  console.log("route.name", route.name);
+  console.log("route.params", route.params);
+
+  if (route.name === "EditExpense") {
+    navigation.setOptions({
+      headerRight: () => (
+        <PIcon pressHandler={deleteHandler}>
+          <AntDesign name="delete" size={20} color={colors.text} />
+        </PIcon>
+      ),
+    });
+  }
+
+  // This is the upper limit for the budget, any expense that is more than this limit will be marked as overbudget
   const budgetLimit = 500;
 
-  const { item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
+  const { id, item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
     route.params;
 
   const [inputItem, setInputItem] = useState(item);
@@ -30,7 +45,6 @@ const DetailsScreen = ({ navigation, route }) => {
 
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
-  //const total = unitPrice && quantity ? unitPrice * quantity : 0;
   const [overbudget, setOverbudget] = useState(isOverbudget);
   const [approved, setApproved] = useState(isApproved);
 
@@ -95,6 +109,16 @@ const DetailsScreen = ({ navigation, route }) => {
     }
     console.log("isCheckboxChecked", isCheckboxChecked);
 
+    // Create a new expense object, isApproved will be separately set depending on whether it is new expense or an edited expense
+    // All new expenses will be marked as not approved, while edited expenses will be updated as per approval status
+    const newExpense = {
+      item: inputItem,
+      unitPrice: Number(inputUnitPrice),
+      quantity: Number(inputQuantity),
+      isOverbudget:
+        Number(inputUnitPrice) * Number(inputQuantity) > budgetLimit,
+    };
+
     if (isEditing) {
       Alert.alert("Important", "Are you sure you want to save these changes?", [
         {
@@ -114,18 +138,16 @@ const DetailsScreen = ({ navigation, route }) => {
         },
       ]);
     } else {
-      let newExpense = {
-        item: inputItem,
-        unitPrice: Number(inputUnitPrice),
-        quantity: Number(inputQuantity),
-        isOverbudget:
-          Number(inputUnitPrice) * Number(inputQuantity) > budgetLimit,
-        isApproved: false,
-      };
+      newExpense.isApproved = false;
       addExpenseToDB(newExpense);
       console.log("Sending new data to database.");
       navigation.navigate("Home");
     }
+  }
+
+  function deleteHandler() {
+    console.log("Delete button pressed");
+    console.log("id", id);
   }
 
   return (

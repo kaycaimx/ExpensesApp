@@ -11,7 +11,9 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreen = ({ navigation, data }) => {
   const allExpenses = data;
-  const overbudgetExpenses = data.filter((expense) => expense.isOverbudget);
+  const overbudgetExpenses = data.filter(
+    (expense) => expense.isOverbudget && !expense.isApproved
+  );
 
   const [addIconPressed, setAddIconPressed] = useState(false);
 
@@ -36,7 +38,7 @@ const HomeScreen = ({ navigation, data }) => {
         headerStyle: { backgroundColor: colors.headerFooter },
         headerTintColor: colors.text,
         headerRight: () => (
-          <PIcon iconStyle={styles.addIcon} pressHandler={navigateToAddExpense}>
+          <PIcon pressHandler={navigateToAddExpense}>
             <Ionicons name="add" size={24} color={colors.text} />
           </PIcon>
         ),
