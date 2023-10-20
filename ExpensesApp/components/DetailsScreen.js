@@ -7,26 +7,29 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import Checkbox from "expo-checkbox";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 import PButton from "./PButton";
 import PIcon from "./PIcon";
 import { colors, styles } from "../styles";
-import { addExpenseToDB } from "../firebase/firestoreHelper";
+import {
+  addExpenseToDB,
+  deleteExpenseFromDB,
+  updateExpenseInDB,
+} from "../firebase/firestoreHelper";
 
 const DetailsScreen = ({ navigation, route }) => {
-  console.log("route.name", route.name);
-  console.log("route.params", route.params);
-
   if (route.name === "EditExpense") {
-    navigation.setOptions({
-      headerRight: () => (
-        <PIcon pressHandler={deleteHandler}>
-          <AntDesign name="delete" size={20} color={colors.text} />
-        </PIcon>
-      ),
-    });
+    useEffect(() => {
+      navigation.setOptions({
+        headerRight: () => (
+          <PIcon pressHandler={deleteHandler}>
+            <AntDesign name="delete" size={20} color={colors.text} />
+          </PIcon>
+        ),
+      });
+    }, [navigation]);
   }
 
   // This is the upper limit for the budget, any expense that is more than this limit will be marked as overbudget
@@ -62,8 +65,8 @@ const DetailsScreen = ({ navigation, route }) => {
 
   function checkCheckbox() {
     setIsCheckboxChecked(!isCheckboxChecked);
-    console.log("Checkbox checked");
   }
+
   // This is the upper limit for the quantity dropdown picker
   const quantityUpperLimit = 10;
 
@@ -77,7 +80,6 @@ const DetailsScreen = ({ navigation, route }) => {
   const [pickerOpen, setPickerOpen] = useState(false);
 
   function handleCancel() {
-    console.log("Cancel pressed");
     changeItem("");
     changeUnitPrice(null);
     changeQuantity(null);
@@ -98,16 +100,10 @@ const DetailsScreen = ({ navigation, route }) => {
     return true;
   }
 
-  function saveEdits() {
-    console.log("Save changes");
-  }
-
   function handleSave() {
-    console.log("Save pressed");
     if (!validateInput()) {
       return;
     }
-    console.log("isCheckboxChecked", isCheckboxChecked);
 
     // Create a new expense object, isApproved will be separately set depending on whether it is new expense or an edited expense
     // All new expenses will be marked as not approved, while edited expenses will be updated as per approval status
@@ -124,7 +120,6 @@ const DetailsScreen = ({ navigation, route }) => {
         {
           text: "No",
           onPress: () => {
-            console.log("Not saving changes");
             return;
           },
           style: "cancel",
@@ -132,7 +127,11 @@ const DetailsScreen = ({ navigation, route }) => {
         {
           text: "Yes",
           onPress: () => {
-            saveEdits();
+            newExpense.isApproved = isCheckboxChecked;
+            if (isCheckboxChecked) {
+              newExpense.isOverbudget = false;
+            }
+            updateExpenseInDB(id, newExpense);
           },
           style: "ok",
         },
@@ -140,14 +139,28 @@ const DetailsScreen = ({ navigation, route }) => {
     } else {
       newExpense.isApproved = false;
       addExpenseToDB(newExpense);
-      console.log("Sending new data to database.");
       navigation.navigate("Home");
     }
   }
 
   function deleteHandler() {
-    console.log("Delete button pressed");
-    console.log("id", id);
+    Alert.alert("Important", "Are you sure you want to delete this entry?", [
+      {
+        text: "No",
+        onPress: () => {
+          return;
+        },
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: () => {
+          deleteExpenseFromDB(id);
+          navigation.navigate("Home");
+        },
+        style: "ok",
+      },
+    ]);
   }
 
   return (

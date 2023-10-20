@@ -15,13 +15,6 @@ const HomeScreen = ({ navigation, data }) => {
     (expense) => expense.isOverbudget && !expense.isApproved
   );
 
-  const [addIconPressed, setAddIconPressed] = useState(false);
-
-  function addExpense() {
-    //console.log("Add expense pressed");
-    setAddIconPressed(true);
-  }
-
   function navigateToAddExpense() {
     navigation.navigate("AddExpense", {
       item: "",
