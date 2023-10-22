@@ -10,6 +10,7 @@ const PIcon = ({ children, pressHandler }) => {
       style={({ pressed }) => {
         return [styles.iconDefault, pressed && styles.iconPressed];
       }}
+      android_ripple={styles.androidRipple}
     >
       {children}
     </Pressable>

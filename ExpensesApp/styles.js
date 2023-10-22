@@ -20,11 +20,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  addIcon: {
-    marginRight: 10,
-  },
   scrollView: {
     width: "90%",
+    paddingTop: 20,
   },
   entryWrapper: {
     flexDirection: "row",
@@ -44,13 +42,13 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 16,
   },
-  priceApprovedWrapper: {
+  priceAlertWrapper: {
     flexDirection: "row",
     height: "90%",
     width: "30%",
     alignItems: "center",
   },
-  priceQuantity: {
+  priceQuantityWrapper: {
     position: "absolute",
     right: 0,
     backgroundColor: colors.priceQuantityWrapper,

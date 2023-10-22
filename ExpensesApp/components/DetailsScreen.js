@@ -20,6 +20,7 @@ import {
 } from "../firebase/firestoreHelper";
 
 const DetailsScreen = ({ navigation, route }) => {
+  // if route.name is Edit Screen, then set headerRight to a delete icon
   if (route.name === "EditExpense") {
     useEffect(() => {
       navigation.setOptions({
@@ -32,7 +33,7 @@ const DetailsScreen = ({ navigation, route }) => {
     }, [navigation]);
   }
 
-  // This is the upper limit for the budget, any expense that is more than this limit will be marked as overbudget
+  // This is the upper limit for the budget, any expense that is more than this limit will be marked as isOverbudget
   const budgetLimit = 500;
 
   const { id, item, unitPrice, quantity, isOverbudget, isApproved, isEditing } =
@@ -47,9 +48,6 @@ const DetailsScreen = ({ navigation, route }) => {
   );
 
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
-  const [overbudget, setOverbudget] = useState(isOverbudget);
-  const [approved, setApproved] = useState(isApproved);
 
   function changeItem(value) {
     setInputItem(value);
@@ -85,7 +83,6 @@ const DetailsScreen = ({ navigation, route }) => {
     changeQuantity(null);
   }
 
-  //Add validation function for item, unitPrice, and quantity!!!
   function validateInput() {
     if (
       !inputItem ||
@@ -114,7 +111,7 @@ const DetailsScreen = ({ navigation, route }) => {
       isOverbudget:
         Number(inputUnitPrice) * Number(inputQuantity) > budgetLimit,
     };
-
+    // if isEditing, then it is an edited expense, call updateExpenseInDB
     if (isEditing) {
       Alert.alert("Important", "Are you sure you want to save these changes?", [
         {
@@ -132,14 +129,16 @@ const DetailsScreen = ({ navigation, route }) => {
               newExpense.isOverbudget = false;
             }
             updateExpenseInDB(id, newExpense);
+            navigation.goBack();
           },
           style: "ok",
         },
       ]);
+      // if not isEditing, then it is a new expense, call addExpenseToDB, and navigate back to Home
     } else {
       newExpense.isApproved = false;
       addExpenseToDB(newExpense);
-      navigation.navigate("Home");
+      navigation.goBack();
     }
   }
 
@@ -156,7 +155,7 @@ const DetailsScreen = ({ navigation, route }) => {
         text: "Yes",
         onPress: () => {
           deleteExpenseFromDB(id);
-          navigation.navigate("Home");
+          navigation.goBack();
         },
         style: "ok",
       },
@@ -189,7 +188,7 @@ const DetailsScreen = ({ navigation, route }) => {
           placeholder={inputQuantity ? inputQuantity.toString() : ""}
         />
       </View>
-      {overbudget && !approved && (
+      {isOverbudget && !isApproved && (
         <View style={styles.checkboxWrapper}>
           <Text style={styles.checkboxLabel}>
             This item is marked as overbudget. Select the checkbox if you would

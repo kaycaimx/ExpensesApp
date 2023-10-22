@@ -1,9 +1,8 @@
-import { Button, KeyboardAvoidingView, View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
 
-import { colors, styles } from "../styles";
+import { colors } from "../styles";
 import PIcon from "./PIcon";
 import EntriesList from "./EntriesList";
 
@@ -38,14 +37,12 @@ const HomeScreen = ({ navigation, data }) => {
         tabBarStyle: { backgroundColor: colors.headerFooter },
         tabBarIcon: ({ focused }) => {
           let iconName;
-          let color;
           if (route.name === "AllExpenses") {
             iconName = "home";
-            color = focused ? colors.tabBarFocused : colors.tabBarUnfocused;
           } else if (route.name === "OverbudgetExpenses") {
             iconName = "alert";
-            color = focused ? colors.tabBarFocused : colors.tabBarUnfocused;
           }
+          let color = focused ? colors.tabBarFocused : colors.tabBarUnfocused;
           return <Ionicons name={iconName} size={24} color={color} />;
         },
         tabBarActiveTintColor: colors.tabBarFocused,

@@ -1,10 +1,9 @@
 import { Pressable } from "react-native";
 import React from "react";
 
-import { colors, styles } from "../styles";
+import { styles } from "../styles";
 
 const PButton = ({ children, pressHandler }) => {
-  
   return (
     <Pressable
       style={({ pressed }) => {

@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, ScrollView, Text } from "react-native";
+import { KeyboardAvoidingView, ScrollView } from "react-native";
 import React from "react";
 
 import Entry from "./Entry";
@@ -6,7 +6,7 @@ import { styles } from "../styles";
 
 const EntriesList = ({ navigation, data }) => {
   return (
-    <KeyboardAvoidingView style={[styles.container, { paddingTop: 20 }]}>
+    <KeyboardAvoidingView style={[styles.container]}>
       <ScrollView style={styles.scrollView}>
         {data.map((expense) => (
           <Entry

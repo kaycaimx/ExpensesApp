@@ -1,9 +1,8 @@
-import { Button, KeyboardAvoidingView, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { colors, styles } from "./styles";
+import { colors } from "./styles";
 import DetailsScreen from "./components/DetailsScreen";
 import HomeScreen from "./components/HomeScreen";
 
@@ -23,6 +22,8 @@ export default function App() {
           data.push({ ...doc.data(), id: doc.id });
         });
         setExpenses(data);
+      } else {
+        setExpenses([]);
       }
     });
   }, []);

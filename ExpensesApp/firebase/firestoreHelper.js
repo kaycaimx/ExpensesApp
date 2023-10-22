@@ -17,6 +17,7 @@ export async function addExpenseToDB(newExpense) {
   }
 }
 
+// delete an expense from the database
 export async function deleteExpenseFromDB(id) {
   try {
     await deleteDoc(doc(database, "expenses", id));
@@ -26,6 +27,7 @@ export async function deleteExpenseFromDB(id) {
   }
 }
 
+// update an expense in the database
 export async function updateExpenseInDB(id, updatedExpense) {
   try {
     await updateDoc(doc(database, "expenses", id), updatedExpense);
@@ -34,3 +36,22 @@ export async function updateExpenseInDB(id, updatedExpense) {
     console.error("Error updating document: ", e);
   }
 }
+
+// Test using query to filter data
+// export async function test() {
+//   const q = query(
+//     collection(database, "expenses"),
+//     where("isOverbudget", "==", true)
+//   );
+
+//   const querySnapshot = await getDocs(q);
+//   let data = [];
+//   querySnapshot.forEach((doc) => {
+//     data.push({ ...doc.data(), id: doc.id });
+//   });
+//   console.log(data);
+//   // querySnapshot.forEach((doc) => {
+//   //   // doc.data() is never undefined for query doc snapshots
+//   //   console.log(doc.id, " => ", doc.data());
+//   // });
+// }

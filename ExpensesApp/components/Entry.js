@@ -24,6 +24,7 @@ const Entry = ({
       isEditing: true,
     });
   }
+
   return (
     <Pressable
       style={({ pressed }) => {
@@ -33,11 +34,11 @@ const Entry = ({
       onPress={pressHandler}
     >
       <Text style={styles.entryItem}>{item}</Text>
-      <View style={styles.priceApprovedWrapper}>
+      <View style={styles.priceAlertWrapper}>
         {isOverbudget && (
           <Foundation name="alert" size={24} color={colors.alertTriangle} />
         )}
-        <View style={styles.priceQuantity}>
+        <View style={styles.priceQuantityWrapper}>
           <Text>
             {quantity} * {unitPrice}
           </Text>
