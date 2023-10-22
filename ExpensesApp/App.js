@@ -15,17 +15,21 @@ export default function App() {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    onSnapshot(collection(database, "expenses"), (snapshot) => {
-      if (!snapshot.empty) {
-        let data = [];
-        snapshot.forEach((doc) => {
-          data.push({ ...doc.data(), id: doc.id });
-        });
-        setExpenses(data);
-      } else {
-        setExpenses([]);
+    const unsubscribe = onSnapshot(
+      collection(database, "expenses"),
+      (snapshot) => {
+        if (!snapshot.empty) {
+          let data = [];
+          snapshot.forEach((doc) => {
+            data.push({ ...doc.data(), id: doc.id });
+          });
+          setExpenses(data);
+        } else {
+          setExpenses([]);
+        }
       }
-    });
+    );
+    return () => unsubscribe();
   }, []);
 
   return (
