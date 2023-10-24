@@ -5,22 +5,21 @@ import Entry from "./Entry";
 import { styles } from "../styles";
 
 const EntriesList = ({ navigation, data }) => {
-  const renderItem = ({ item }) => (
-    <Entry
-      navigation={navigation}
-      id={item.id}
-      item={item.item}
-      unitPrice={item.unitPrice}
-      quantity={item.quantity}
-      isOverbudget={item.isOverbudget}
-      isApproved={item.isApproved}
-    />
-  );
   return (
     <View style={styles.scrollView}>
       <FlatList
         data={data}
-        renderItem={(item) => renderItem(item)}
+        renderItem={({ item }) => (
+          <Entry
+            navigation={navigation}
+            id={item.id}
+            item={item.item}
+            unitPrice={item.unitPrice}
+            quantity={item.quantity}
+            isOverbudget={item.isOverbudget}
+            isApproved={item.isApproved}
+          />
+        )}
         keyExtractor={(item) => item.id}
       />
       {/* <ScrollView style={styles.scrollView}>

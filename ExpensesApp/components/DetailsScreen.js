@@ -129,7 +129,7 @@ const DetailsScreen = ({ navigation, route }) => {
               newExpense.isOverbudget = false;
             }
             updateExpenseInDB(id, newExpense);
-            navigation.goBack();
+            navigation.navigate("Home");
           },
           style: "ok",
         },
@@ -138,7 +138,7 @@ const DetailsScreen = ({ navigation, route }) => {
     } else {
       newExpense.isApproved = false;
       addExpenseToDB(newExpense);
-      navigation.goBack();
+      navigation.navigate("Home");
     }
   }
 
@@ -155,7 +155,7 @@ const DetailsScreen = ({ navigation, route }) => {
         text: "Yes",
         onPress: () => {
           deleteExpenseFromDB(id);
-          navigation.goBack();
+          navigation.navigate("Home");
         },
         style: "ok",
       },
