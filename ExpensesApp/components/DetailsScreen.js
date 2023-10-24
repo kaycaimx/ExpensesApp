@@ -101,7 +101,6 @@ const DetailsScreen = ({ navigation, route }) => {
     if (!validateInput()) {
       return;
     }
-
     // Create a new expense object, isApproved will be separately set depending on whether it is new expense or an edited expense
     // All new expenses will be marked as not approved, while edited expenses will be updated as per approval status
     const newExpense = {
@@ -129,16 +128,16 @@ const DetailsScreen = ({ navigation, route }) => {
               newExpense.isOverbudget = false;
             }
             updateExpenseInDB(id, newExpense);
-            navigation.navigate("Home");
+            navigation.navigate("AllExpenses");
           },
           style: "ok",
         },
       ]);
-      // if not isEditing, then it is a new expense, call addExpenseToDB, and navigate back to Home
+      // if not isEditing, then it is a new expense, call addExpenseToDB
     } else {
       newExpense.isApproved = false;
       addExpenseToDB(newExpense);
-      navigation.navigate("Home");
+      navigation.navigate("AllExpenses");
     }
   }
 
@@ -155,7 +154,7 @@ const DetailsScreen = ({ navigation, route }) => {
         text: "Yes",
         onPress: () => {
           deleteExpenseFromDB(id);
-          navigation.navigate("Home");
+          navigation.navigate("AllExpenses");
         },
         style: "ok",
       },

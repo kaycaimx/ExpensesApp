@@ -1,14 +1,45 @@
-import { FlatList, ScrollView, View } from "react-native";
-import React from "react";
+import { FlatList, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { database } from "../firebase/firebaseSetup";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 import Entry from "./Entry";
 import { styles } from "../styles";
 
-const EntriesList = ({ navigation, data }) => {
+const EntriesList = ({ navigation, route }) => {
+  const [expenses, setExpenses] = useState([]);
+
+  // set up a listener for the database
+  useEffect(() => {
+    let q;
+    // filter data based on route name at the database level
+    if (route.name === "OverbudgetExpenses") {
+      q = query(
+        collection(database, "expenses"),
+        where("isOverbudget", "==", true),
+        where("isApproved", "==", false)
+      );
+    } else {
+      q = query(collection(database, "expenses"));
+    }
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) {
+        let data = [];
+        snapshot.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        setExpenses(data);
+      } else {
+        setExpenses([]);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <View style={styles.scrollView}>
       <FlatList
-        data={data}
+        data={expenses}
         renderItem={({ item }) => (
           <Entry
             navigation={navigation}
@@ -22,20 +53,6 @@ const EntriesList = ({ navigation, data }) => {
         )}
         keyExtractor={(item) => item.id}
       />
-      {/* <ScrollView style={styles.scrollView}>
-        {data.map((expense) => (
-          <Entry
-            key={expense.id}
-            navigation={navigation}
-            id={expense.id}
-            item={expense.item}
-            unitPrice={expense.unitPrice}
-            quantity={expense.quantity}
-            isOverbudget={expense.isOverbudget}
-            isApproved={expense.isApproved}
-          />
-        ))}
-      </ScrollView> */}
     </View>
   );
 };

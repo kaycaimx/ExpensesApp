@@ -8,12 +8,7 @@ import EntriesList from "./EntriesList";
 
 const Tab = createBottomTabNavigator();
 
-const HomeScreen = ({ navigation, data }) => {
-  const allExpenses = data;
-  const overbudgetExpenses = data.filter(
-    (expense) => expense.isOverbudget && !expense.isApproved
-  );
-
+const HomeScreen = ({ navigation }) => {
   function navigateToAddExpense() {
     navigation.navigate("AddExpense", {
       item: "",
@@ -24,6 +19,7 @@ const HomeScreen = ({ navigation, data }) => {
       isEditing: false,
     });
   }
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -51,22 +47,20 @@ const HomeScreen = ({ navigation, data }) => {
     >
       <Tab.Screen
         name="AllExpenses"
+        component={EntriesList}
         options={{
           title: "All Expenses",
           tabBarLabel: "Home",
         }}
-      >
-        {(props) => <EntriesList {...props} data={allExpenses} />}
-      </Tab.Screen>
+      />
       <Tab.Screen
         name="OverbudgetExpenses"
+        component={EntriesList}
         options={{
           title: "Overbudget Expenses",
           tabBarLabel: "Overbudget",
         }}
-      >
-        {(props) => <EntriesList {...props} data={overbudgetExpenses} />}
-      </Tab.Screen>
+      />
     </Tab.Navigator>
   );
 };
