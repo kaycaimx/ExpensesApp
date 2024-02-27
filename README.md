@@ -1,11 +1,12 @@
 # Expense App
 
 NEU CS5520 Fall 2023 - Mobile Dev Assignment 2
+
 Kay (Mengxian) Cai
 
-## App Introduction:
+## App Introduction
 
-An expense tracker app, which is connected to a firebase Firestore database. User can add, edit, delete and get data from database.
+An expense tracker app, which is connected to a firebase Firestore database. User can add, edit, delete and get expenses entries from database.
 
 ## Table of Contents
 
@@ -19,23 +20,18 @@ An expense tracker app, which is connected to a firebase Firestore database. Use
 
 ## User Guide
 
-Please check the video at https://www.youtube.com/watch?v=-3Ko4rG3P9U which provides an overview and usage guide about the app.
+The app's home screen displays a list of all expense entries. An entry will be automatically marked as overbudget if the total expense for an entry is more than 500. User can navigate between the All Expenses screen and the Overbudget Expenses screen from the bottom tab bar.
 
-The app's home screen displays pets in different tabs that users can swipe to view. All logs are shown in reverse chronological order. User can user the top search bar to searh for logs of a certain type.
+![All Expenses screen](./screenshots/all_exp.PNG)
+![Overbudget Expenses screen](./screenshots/overbudget_exp.PNG)
 
-![Home screen](./PetDiaryApp/assets/screenshots/home.png)
+From both All Expenses and Overbudget Expenses screens, user can navigate to Add An Expense screen by pressing on the + button on the top right of the screen. Add An Expense screen shows a form to the user to add an expense entry with item, unit price and quantity. After user press the save button and the inputs are validated, the entry will be saved into Firestore database and updated in the home screen.
 
-By pressing the big plus button in the bottom middle of home screen, user can add a log for their pets.
+![Add expense screen](./screenshots/add.PNG)
 
-![Add log screen](./PetDiaryApp/assets/screenshots/add.png)
+Tapping each entry item in the list (on both All Expenses and Overbudget Expenses screens) navigate to an Edit screen. Changing any of the values and pressing the Save button will update the Firestore database and the lists on both screens accordingly. User can also delete an entry by pressing the dustbin icon on the top right of the screen
 
-By pressing a specific log in the home screen, user can edit or delete a log.
-
-![Edit log screen](./PetDiaryApp/assets/screenshots/edit.png)
-
-By pressing the person icon on the top left of the home screen, user can go to Profile screen.
-
-![Profile screen](./PetDiaryApp/assets/screenshots/profile.png)
+![Edit expense screen](./screenshots/details.PNG)
 
 ## Getting Started
 
