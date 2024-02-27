@@ -88,6 +88,7 @@ const DetailsScreen = ({ navigation, route }) => {
       !inputItem ||
       !isNaN(inputItem) ||
       !inputUnitPrice ||
+      isNaN(inputUnitPrice) ||
       inputUnitPrice < 0 ||
       !inputQuantity
     ) {
